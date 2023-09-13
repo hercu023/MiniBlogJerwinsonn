@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../register/register.css">
+
+</head>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const registrationForm = document.getElementById("registrationForm");
+
+        registrationForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const usernameInput = document.getElementById("username");
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("pass");
+            const confirmPasswordInput = document.getElementById("confirmPass");
+
+            const username = usernameInput.value;
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            const confirmPassword = confirmPasswordInput.value;
+
+            if (password !== confirmPassword) {
+                alert("Passwords do not match. Please try again.");
+                return;
+            }
+
+            localStorage.setItem("username", username);
+            localStorage.setItem("email", email);
+            localStorage.setItem("password", password);
+
+            alert(`Registration Successful\nUsername: ${username}\nEmail: ${email}\nPassword: ${password}`);
+
+            window.location.href = "../MiniBlogJerwinsonn/index.html";
+        });
+    });
+</script>
+<body>
+    <div class="header">
+        <h1>MiniBlog</h1>
+        <a href="../MiniBlogJerwinsonn/index.html" id="p">Login</a>
+    </div>
+    <div class="registration-header">
+        <span>Registration</span>
+    </div>
+    <div class="login-box">
+        <div class="login-header">Registration Form</div>
+        <hr>
+        <form id="registrationForm"> <!-- Wrap your form in a <form> element -->
+            <div class="txt_field">
+                <input type="text" id="username" name="username" required>
+                <span></span>
+                <label for="username">Enter Username</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" id="email" name="email" required>
+                <span></span>
+                <label for="email">Enter Email</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" id="pass" name="password" required>
+                <span></span>
+                <label for="password">Enter Password</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" id="confirmPass" name="confirmPassword" required>
+                <span></span>
+                <label for="confirmPassword">Confirm Password</label>
+            </div>
+            <div class="loginbtn">
+                <input type="submit" value="REGISTER" name="submit" id="sub">
+            </div>
+        </form>
+        <div class="registerbtn">
+            Return to <a href="../index.html" id="register">LOGIN PAGE</a>
+        </div>
+    </div>
+</body>
+</html>

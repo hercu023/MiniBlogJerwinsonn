@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Post</title>
+    <link rel="stylesheet" type="text/css" href="../create-post/create-post.css">
+</head>
+<body>
+    <div class="header">
+        <h1>MiniBlog</h1>
+        <a href="../index.html" id="p">Logout</a>
+        <a href="../home-page/home.html" id="p">Home</a>
+
+        <p id="username">Username</p>
+    </div>
+    <div class="login-box">
+        <div class="login-header">Create a Post!</div>
+        <hr>
+        <form id="postForm">
+            <div class="txt_field">
+                <input type="text" id="title" name="title" required>
+                <span></span>
+                <label for="title">Enter Title</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" id="content" name="content" required>
+                <span></span>
+                <label for="content">Enter Content</label>
+            </div>
+            <div class="buttons">
+                <div class="loginbtn">
+                    <input type="submit" value="POST" name="submit" id="sub">
+                </div>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username");
+
+            // Display the username in the header
+            const usernameElement = document.getElementById("username");
+            if (usernameElement && username) {
+                usernameElement.textContent = `Hi ${username}!`;
+            }
+            const postForm = document.getElementById("postForm");
+    
+            postForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+    
+                const title = document.getElementById("title").value;
+                const content = document.getElementById("content").value;
+    
+                // Get the existing posts from localStorage or initialize an empty array
+                const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+    
+                // Add the new post to the array
+                existingPosts.push({ title, content });
+    
+                // Store the updated array of posts in localStorage
+                localStorage.setItem("posts", JSON.stringify(existingPosts));
+    
+                window.location.href = "../home-page/home.html";
+            });
+        });
+    </script>
+</body>
+</html>

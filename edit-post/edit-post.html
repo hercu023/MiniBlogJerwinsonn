@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Post</title>
+    <link rel="stylesheet" type="text/css" href="../create-post/create-post.css">
+</head>
+<body>
+    <div class="header">
+        <h1>MiniBlog</h1>
+        <a href="../index.html" id="p">Logout</a>
+        <a href="../home-page/home.html" id="p">Home</a>
+        <p id="username">Username</p>
+    </div>
+    <div class="login-box">
+        <div class="login-header">Edit Post</div>
+        <hr>
+        <form id="postForm">
+            <div class="txt_field">
+                <input type="text" id="title" name="title" required>
+                <span></span>
+                <label for="title">Enter Title</label>
+            </div>
+            <div class="txt_field">
+                <input type="text" id="content" name="content" required>
+                <span></span>
+                <label for="content">Enter Content</label>
+            </div>
+            <div class="buttons">
+                <div class="loginbtn">
+                    <input type="submit" value="SAVE" name="submit" id="sub">
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username");
+
+            // Display the username in the header
+            const usernameElement = document.getElementById("username");
+            if (usernameElement && username) {
+                usernameElement.textContent = `Hi ${username}!`;
+            }
+            const postForm = document.getElementById("postForm");
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get("index");
+
+            const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+
+            const postToEdit = savedPosts[index];
+
+            document.getElementById("title").value = postToEdit.title;
+            document.getElementById("content").value = postToEdit.content;
+
+            postForm.addEventListener("submit", function (event) {
+                event.preventDefault();
+
+                const updatedTitle = document.getElementById("title").value;
+                const updatedContent = document.getElementById("content").value;
+
+                savedPosts[index].title = updatedTitle;
+                savedPosts[index].content = updatedContent;
+
+                // Store the updated array of posts in localStorage
+                localStorage.setItem("posts", JSON.stringify(savedPosts));
+
+                window.location.href = "../home-page/home.html";
+            });
+        });
+    </script>
+</body>
+</html>

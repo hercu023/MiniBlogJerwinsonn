@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../MiniBlogJerwinsonn/login-page/login.css">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const emailInput = document.getElementById("email");
+            const passwordInput = document.getElementById("pass");
+            const loginButton = document.getElementById("sub");
+            const warningMessage = document.querySelector(".warning-message");
+
+            function checkLogin() {
+                const enteredEmail = emailInput.value;
+                const enteredPassword = passwordInput.value;
+
+                const storedEmail = localStorage.getItem("email");
+                const storedPassword = localStorage.getItem("password");
+                const storedUsername = localStorage.getItem("username");
+
+                if (enteredEmail === storedEmail && enteredPassword === storedPassword) {
+                    warningMessage.textContent = "Login successful!";
+                    warningMessage.style.color = "green";
+                    window.location.href = `../MiniBlogJerwinsonn/home-page/home.html?username=${encodeURIComponent(storedUsername)}`
+                } else {
+                    warningMessage.textContent = "Login failed. Please check your email and password.";
+                    warningMessage.style.color = "red";
+                }
+            }
+
+            loginButton.addEventListener("click", function (event) {
+                event.preventDefault(); 
+                checkLogin();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="header">
+        <h1>MiniBlog</h1>
+        <a href="../MiniBlogJerwinsonn/index.html" id="p">Login</a>
+        <div class="login-box">
+            <div class="login-header">Login</div>
+            <hr>
+            <div class="txt_field">
+                <input type="text" id="email" name="email" required>
+                <span></span>
+                <label for="email">Enter Email</label>
+            </div>
+            <div class="txt_field">
+                <input type="password" id="pass" name="password" required>
+                <span></span>
+                <label for="password">Enter Password</label>
+            </div>
+            <div class="buttons">
+                <div class="loginbtn">
+                    <input type="submit" value="LOGIN" name="submit" id="sub">
+                </div>
+                <div class="registerbtn">
+                    <a href="../MiniBlogJerwinsonn/register/register.html" id="register">REGISTER</a>
+                </div>
+            </div>
+            <div class="warning-message">
+                Currently logged out.
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../home-page/home.css">
+
+</head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const username = localStorage.getItem("username");
+
+            // Display the username in the header
+            const usernameElement = document.getElementById("username");
+            if (usernameElement && username) {
+                usernameElement.textContent = `Hi ${username}!`;
+            }
+            function deletePost(postElement, index) {
+                postElement.remove();
+
+                const existingPosts = JSON.parse(localStorage.getItem("posts")) || [];
+
+                existingPosts.splice(index, 1);
+
+                localStorage.setItem("posts", JSON.stringify(existingPosts));
+            }
+
+            function createAndDisplayPost(post, index) {
+                const postsContainer = document.querySelector(".posts-container");
+
+                postsContainer.style.marginBottom = "-2rem";
+
+                const postElement = document.createElement("div");
+                postElement.classList.add("login-box");
+
+                const titleElement = document.createElement("div");
+                titleElement.classList.add("login-header");
+                titleElement.textContent = post.title;
+
+                const contentElement = document.createElement("div");
+                contentElement.classList.add("content");
+                contentElement.textContent = post.content;
+
+                const dateElement = document.createElement("div");
+                dateElement.classList.add("date");
+                dateElement.textContent = "Date: " + new Date().toLocaleDateString();
+
+                const hrElement = document.createElement("hr");
+
+                const deleteButton = document.createElement("button");
+                deleteButton.classList.add("delete-button");
+                deleteButton.textContent = "DELETE";
+                deleteButton.addEventListener("click", () => {
+                    deletePost(postElement, index);
+                });
+
+                deleteButton.style.display = "inline-block";
+                deleteButton.style.fontFamily = "'calibri', sans-serif";
+                deleteButton.style.padding = "10px";
+                deleteButton.style.marginTop = "2vh";
+                deleteButton.style.marginBottom = "20px";
+                deleteButton.style.textAlign = "center";
+                deleteButton.style.width = "20%";
+                deleteButton.style.marginLeft = "1rem";
+                deleteButton.style.maxHeight = "60px";
+                deleteButton.style.outline = "none";
+                deleteButton.style.border = "none";
+                deleteButton.style.fontSize = "16px";
+                deleteButton.style.borderRadius = "10px";
+                deleteButton.style.color = "white";
+                deleteButton.style.background = "#ac0909";
+                deleteButton.style.cursor = "pointer";
+                deleteButton.style.transition = "0.5s";
+
+                deleteButton.addEventListener("mouseenter", function () {
+                    deleteButton.style.background = "rgb(83, 0, 0)";
+                });
+
+                deleteButton.addEventListener("mouseleave", function () {
+                    deleteButton.style.background = "#ac0909";
+                });
+
+                const editLink = document.createElement("a");
+                editLink.classList.add("edit-link");
+                editLink.href = `../edit-post/edit-post.html?index=${index}`;
+                editLink.textContent = "EDIT";
+
+                editLink.style.display = "inline-block";
+                editLink.style.fontFamily = "'calibri', sans-serif";
+                editLink.style.padding = "10px";
+                editLink.style.marginTop = "2vh";
+                editLink.style.marginBottom = "20px";
+                editLink.style.textAlign = "center";
+                editLink.style.width = "15%";
+                editLink.style.marginLeft = "1.3rem";
+                editLink.style.maxHeight = "60px";
+                editLink.style.outline = "none";
+                editLink.style.border = "none";
+                editLink.style.textDecoration = "none";
+                editLink.style.fontSize = "16px";
+                editLink.style.borderRadius = "10px";
+                editLink.style.color = "white";
+                editLink.style.background = "#21b304";
+                editLink.style.cursor = "pointer";
+                editLink.style.transition = "0.5s";
+
+                editLink.addEventListener("mouseenter", function () {
+                    editLink.style.background = "rgb(3, 133, 57)";
+                });
+
+                editLink.addEventListener("mouseleave", function () {
+                    editLink.style.background = "#21b304";
+                });
+
+
+                postElement.appendChild(titleElement);
+                postElement.appendChild(contentElement);
+                postElement.appendChild(dateElement);
+                postElement.appendChild(hrElement);
+
+                const buttonsContainer = document.createElement("div");
+                buttonsContainer.classList.add("buttons");
+                buttonsContainer.appendChild(deleteButton);
+                buttonsContainer.appendChild(editLink);
+                postElement.appendChild(buttonsContainer);
+
+                postsContainer.appendChild(postElement);
+            }
+
+            const savedPosts = JSON.parse(localStorage.getItem("posts")) || [];
+
+            savedPosts.forEach((post, index) => {
+                createAndDisplayPost(post, index);
+            });
+        });
+    </script>
+<body>
+    <div class="header">
+        <h1>MiniBlog</h1>
+        <a href="../index.html" id="p">Logout</a>
+        <p>Home</p>
+        <p id="username">Username</p>
+    </div>
+    <div class="posts-container">
+    </div>
+    <div class="create-post">
+        <div class="buttons">
+            <div class="createpost">
+                <a href="../create-post/create-post.html" id="create-post">CREATE POST</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
